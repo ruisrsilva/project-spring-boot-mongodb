@@ -1,6 +1,8 @@
 package com.ruisilva.workshopmongodb.resources;
 
 import com.ruisilva.workshopmongodb.domain.User;
+import com.ruisilva.workshopmongodb.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,12 +16,12 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<User>> findAll(){
-        User u1 = new User("1", "Maria", "maria@gmail.com");
-        User u2 = new User("2", "Bob", "bob@gmail.com");
-
-        List<User> list = new ArrayList<>(Arrays.asList(u1, u2));
+        List<User> list = userService.findAll();
 
         return ResponseEntity.ok().body(list);
     }
